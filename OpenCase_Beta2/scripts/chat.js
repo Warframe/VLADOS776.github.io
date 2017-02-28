@@ -36,9 +36,12 @@ $(function () {
     var goToChat = false;
     
     //User location
-    $.get("https://ipinfo.io", function(response) {
-        Player.country = response.country.toLowerCase();
-    }, "jsonp");
+    //Changed the api to one that allows for more requests
+	$.get("https://freegeoip.net/json", function(response) {
+		Player.country = response.country_code.toLowerCase();
+	}, "jsonp").fail(function() {
+		Player.country = "ru"
+	});
     
     if (/chat-\w{2}$/.test(history.state)) {
         var goToChat = history.state.match(/chat-(\w{2})/)[1];
